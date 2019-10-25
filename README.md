@@ -6,7 +6,7 @@ Como utilizar el repositorio, en la carpeta de ejemplos pueden encontrar ejemplo
     Reglas del lenguaje:
     
     declaración de capaz neuronales:
-        - tipo ( especificaciones ) cantidad .
+        - tipo ( especificaciones ) cantidad . => especificaciones = ( numCell 3 activation softmax drop 0.1)
         - tipo (especificaciones) -> defecto 1
         - tipo () cantidad -> inferir especificaciones.
         - 

@@ -1,0 +1,11 @@
+lstm
+dense
+embedding
+cnn
+pool
+flatten
+optim
+loss
+global
+conjunto
+

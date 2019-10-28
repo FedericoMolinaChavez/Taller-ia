@@ -1,0 +1,8 @@
+global ( batch_size 10 epochs 15 drop 0.01 r_drop 0.02 ) .
+conjunto ( ./trainables/testPost1 ./trainables/trestneg1 ) .
+embedding ( input_dim 23 output_dim 23 embedding_initializer 'uniform' embeddings_regularizer None embeddings_constraint None mask_zero False input_length 10 ) 1 .
+lstm ( numCell 10 recurrActivation softmax activation relu ) 3 .
+lstm ( numCell 10 recurrActivation softmax activation relu last True ) 1 .
+dense ( units 2 activation softmax use_bias True ) 1 .
+optim ( adam ) .
+loss 'categorical_crossentropy'

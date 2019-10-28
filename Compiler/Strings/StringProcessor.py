@@ -1,7 +1,8 @@
 import os
 
 def loadRules():
-    f = open('./Strings/rules.ro', 'r')
+    print(os.listdir())
+    f = open('./Compiler/Strings/rules.ro', 'r')
     contentInArchive = f.readlines()
     lista = []
     for i in contentInArchive:

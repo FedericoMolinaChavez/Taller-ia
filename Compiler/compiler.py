@@ -1,8 +1,8 @@
-from Strings.StringProcessor import StringProcessor as stringprocc
-import overhead 
+from Compiler.Strings.StringProcessor import StringProcessor as stringprocc
+import Compiler.overhead as overhead 
 
-def readInstructions():
-    f = open('./definition.def', 'r')
+def readInstructions(file):
+    f = open(file, 'r')
     contentInArchive = f.readlines()
     lista = []
     for i in contentInArchive:
@@ -10,10 +10,10 @@ def readInstructions():
     return(lista)
 
 class Compiler():
-    def __init__(self, sess):
+    def __init__(self, sess, file):
         self.sess = sess 
         self.stringProcc = stringprocc(1)
-        self.instructions = readInstructions()
+        self.instructions = readInstructions(file)
         self.endFile = './output.py'
     def fillInstructions(self, instructions):
         self.instructions = instructions
@@ -29,7 +29,3 @@ class Compiler():
     def addLast(self):
         overhead.addOthers()
 
-c = Compiler(1)
-c.addOver()
-c.interpret()
-c.addLast()

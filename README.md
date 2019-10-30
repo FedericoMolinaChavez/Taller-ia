@@ -23,3 +23,5 @@ Como utilizar el repositorio, en la carpeta de ejemplos pueden encontrar ejemplo
             types: batch size, epochs, drop, r_drop
 
 En la carpeta de compiler se puede encontrar un archivo de ejemplo.
+
+En la carpeta Pickles pueden encontrar la base de datos pre procesada para poder utilizarla de inmediato sin necesidad de correr el programa de preprocessing. Si desean utilizarla deben cambiar la forma de importar dentro de su modelo y utilizar el pickle.

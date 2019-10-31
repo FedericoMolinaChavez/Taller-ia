@@ -37,7 +37,7 @@ def preprocessing():
     valy = trainy[int(len(trainy)*0.9):]
     trainy = trainy[0:int(len(trainy)*0.9)]
     with open("pickles/image_data.pickle", 'wb') as f:
-        pickle.dump([trainx,trainy,testx,testy,valx,valy], f)
+        pickle.dump([np.array(trainx),np.array(trainy),np.array(testx),np.array(testy),np.array(valx),np.array(valy)], f)
     return (trainx,trainy,testx,testy,valx,valy)
 
 
@@ -50,4 +50,5 @@ def testPickle():
             except EOFError:
                 break
     print(objects)
-       
+
+preprocessing()

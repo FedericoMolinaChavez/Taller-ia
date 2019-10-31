@@ -3,13 +3,16 @@ def returnOverhead():
     f.write('import tensorflow as tf \n')
     f.write('from keras.models import Sequential \n')
     f.write('from keras import optimizers \n')
-    f.write('from keras.layers import Dense, Embedding, LSTM \n')
+    f.write('from keras.layers import Dense, Embedding, LSTM ,Flatten, Conv1D, MaxPooling1D, Conv2D, MaxPooling2D, Reshape\n')
     f.write('import numpy as np \n')
     f.write('from keras.models import model_from_json \n')
     f.write('from keras.models import load_model \n')
     f.write('from keras import backend \n')
+    f.write('import pickle \n')
     f.write('model = Sequential() \n')
-    f.write('from preprocessing import trueCreateFeatureVector \n')
+    f.write('from preprocessingCD import preprocessing \n')
+    f.write("with open('./pickles/image_data.pickle','rb') as f: \n")
+    f.write('   [trainx,trainy,testx,testy,valx,valy] = pickle.load(f) \n')
     f.close()
 
 def addOthers():

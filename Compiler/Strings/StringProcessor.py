@@ -118,18 +118,19 @@ class StringProcessor():
                 d = '1d'
                 filters = ''
                 kernel_size = '0'
-                strides = '0'
+                strides = '1'
                 padding = 'valid'
                 data_format = 'channels_last'
                 dilation_rate = '1'
                 activation = 'None'
                 use_bias = 'True'
-                kernel_initializaer = 'glorot_uniform'
-                bias_initializer = 'zeros',
+                kernel_initializer = 'glorot_uniform'
+                bias_initializer = 'zeros'
                 kernel_regularizer = 'None'
                 activity_regularizer = 'None'
                 kernel_constraint = 'None'
                 bias_constraint = 'None'
+                bias_regularizer = 'None'
                 i = ''
                 cont = 1
                 while i != ')':
@@ -139,7 +140,7 @@ class StringProcessor():
                     if(i == 'filters'):
                         filters = str(arrayOfInstructions[cont + 1])
                     if(i == 'kernel_size'):
-                        kernel_size = arrayOfInstructions[cont + 1]
+                        kernel_size = '('+arrayOfInstructions[cont + 1]+','+arrayOfInstructions[cont + 1]+')'
                     if(i == 'strides'):
                         if(d == '2d'):
                             strides = '('+arrayOfInstructions[cont + 1]+','+arrayOfInstructions[cont + 1]+')'
@@ -177,12 +178,12 @@ class StringProcessor():
                 print(cantidad)
                 for i in range(0,int(cantidad)):
                     if(d == '1d'):   
-                        arrayOfSol.append('model.add(Conv1D('+filters+','+kernel_size+'strides='+strides+', padding= '+ padding+ ', data_format= '+  data_format + ', dilation_rate=' + dilation_rate + ', activation =' + activation + ', use_bias='+ use_bias+', kernel_initializer'+kernel_initializer+', bias_initializer='+ bias_initializer+', kernel_regularizer='+kernel_regularizer +', bias_regularizer='+bias_regularizer+', activity_regularizer ='+activity_regularizer+', kernel_constraint ='+kernel_constraint+'bias_constraint='+bias_constraint+')\n')
+                        arrayOfSol.append('model.add(Conv1D('+filters+' , '+kernel_size+', strides='+strides+', padding= '+ "'"+padding+ "'"+', data_format= '+ "'"+ data_format + "'"+ ', dilation_rate=' + dilation_rate + ', activation =' + activation + ', use_bias='+ use_bias+', kernel_initializer = '+ "'"+kernel_initializer+ "'"+', bias_initializer='+ "'"+bias_initializer+"'"+', kernel_regularizer='+kernel_regularizer +', bias_regularizer='+bias_regularizer+', activity_regularizer ='+ activity_regularizer +', kernel_constraint ='+kernel_constraint+', bias_constraint='+bias_constraint+'))\n')
                     else:
-                        arrayOfSol.append('model.add(Conv2D('+filters+','+kernel_size+'strides='+strides+', padding= '+ padding+ ', data_format= '+  data_format + ', dilation_rate=' + dilation_rate + ', activation =' + activation + ', use_bias='+ use_bias+', kernel_initializer'+kernel_initializer+', bias_initializer='+ bias_initializer+', kernel_regularizer='+kernel_regularizer +', bias_regularizer='+bias_regularizer+', activity_regularizer ='+activity_regularizer+', kernel_constraint ='+kernel_constraint+'bias_constraint='+bias_constraint+')\n')
+                        arrayOfSol.append('model.add(Conv2D('+filters+','+kernel_size+', strides='+strides+', padding= '+"'"+ padding+"'"+ ', data_format= '+"'"+  data_format +"'"+ ', dilation_rate=' + dilation_rate + ', activation =' + activation + ', use_bias='+ use_bias+', kernel_initializer = '+"'"+kernel_initializer+"'"+', bias_initializer='+"'"+ bias_initializer+"'"+', kernel_regularizer='+kernel_regularizer +', bias_regularizer='+bias_regularizer+', activity_regularizer ='+activity_regularizer+', kernel_constraint ='+kernel_constraint+', bias_constraint='+bias_constraint+'))\n')
                 return arrayOfSol
             if(arrayOfInstructions[0] == 'pool'):
-                pool_size = 2
+                pool_size = "2"
                 strides = 'None'
                 padding = 'valid'
                 data_format = 'channels_last'
@@ -203,11 +204,13 @@ class StringProcessor():
                         d = arrayOfInstructions [cont + 1]
                     cont = cont + 1
                 if(d == '1d'):
-                    arrayOfSol.append('model.add(MaxPooling1D('+'pool_size ='+pool_size+', strides= '+ strides+ ', padding= '+  padding + ', data_format=' + data_format+')\n')
+                    arrayOfSol.append('model.add(MaxPooling1D('+'pool_size ='+pool_size+', strides= '+ strides+ ', padding= '+ "'"+ padding + "'"+ ', data_format=' + "'"+ data_format+ "'"+'))\n')
                 else:
-                    arrayOfSol.append('model.add(MaxPooling1D('+'pool_size ='+pool_size+', strides= '+ strides+ ', padding= '+  padding + ', data_format=' + data_format+')\n')
+                    arrayOfSol.append('model.add(MaxPooling1D('+'pool_size ='+pool_size+', strides= '+ strides+ ', padding= '+ "'"+ padding + "'"+ ', data_format=' + "'"+ data_format+ "'"+'))\n')
+                return(arrayOfSol)
             if(arrayOfInstructions[0] == 'flatten'):
-                arrayOfSol.append('Flatten()')
+                arrayOfSol.append('model.add(Flatten())\n')
+                return(arrayOfSol)
             if(arrayOfInstructions[0] == 'optim'):
                 type = 'adam'
                 cont = 1
@@ -253,7 +256,13 @@ class StringProcessor():
                 return(arrayOfSol)
             if(arrayOfInstructions[0] == 'conjunto'):
                 arrayOfSol.append('trainx,trainy,testx,testy,valx,valy = trueCreateFeatureVector('+"'"+arrayOfInstructions[2]+"'"+','+"'"+arrayOfInstructions[3]+"'"+')\n')
-                return(arrayOfSol)                        
+                return(arrayOfSol)
+            if(arrayOfInstructions[0] == 'Reshape'):
+                shape = arrayOfInstructions[2]
+                input_shape = arrayOfInstructions[3]
+                arrayOfSol.append('model.add(Reshape( '+ shape+ ', input_shape ='+input_shape+')) \n')
+                return(arrayOfSol)
+
             
             
 
